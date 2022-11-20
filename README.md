@@ -1,5 +1,6 @@
 # Tempature Sensor
-This builds a temperature reader with teh adafruit [SHT40 reader](https://learn.adafruit.com/adafruit-sht40-temperature-humidity-sensor). This is basic setup which provides terminal readout from the sensor.  
+This is basic micropython API for the SHT40 temperature sensor which works with micropython.  The adafruit driver was built for 
+circuit python and this ensures it works for micropython without other depedencies.  This builds a temperature reader with teh adafruit [SHT40 reader](https://learn.adafruit.com/adafruit-sht40-temperature-humidity-sensor). This is basic setup which provides terminal readout from the sensor.  
 
 ## Node MCU Setup With Micropython
 This article provides a nice summary of setting up NodeMCU with micropython.  This should work for blank NodeMCU or one with material already.  https://www.embedded-robotics.com/esp8266-micropython/.  
@@ -11,15 +12,20 @@ This provides very good setup and I suggest using Thonny app for develompent.  h
 To start, I am setting up the NodeMCU with fresh micropython.  I am going to use 
 [this reference](https://icircuit.net/nodemcu-getting-started-micropython/2406) to to complete the setup. My setup is on Linux, so here is some helpful howtos on setup:
 
-- how to check drivers on linux `ls /dev/tty*`
-- https://www.embedded-robotics.com/esp8266-micropython/
-- use `esptool` to flash the board (https://blog.anavi.technology/?p=209)
-- to interact with the controller through the usb, get the ampy tool. This is detailed out here https://www.digikey.com/en/maker/projects/micropython-basics-load-files-run-code/fb1fcedaf11e4547943abfdd8ad825ce but can be installed with pip with `pip install adafruit-ampy --upgrade`.  Useful commands are:
-  - ls /dev/tty* 
-  - ampy --port /dev/ttyUSB0 ls
-
 # Parts
 * [Adafruit SHT40](https://learn.adafruit.com/adafruit-sht40-temperature-humidity-sensor)
+
+# Example
+
+```python
+from sht40_micropython import SHT40
+
+# this is example setup on the nodemcu ESP8266 board
+sht40 = SHT40(scl_pin=4, sda_pin=3, freq=config.board_baud_rate)
+results = sht40.measure()
+
+print(results)
+```
 
 # References
 1. [NodeMCU Micropython setup](https://icircuit.net/nodemcu-getting-started-micropython/2406)
